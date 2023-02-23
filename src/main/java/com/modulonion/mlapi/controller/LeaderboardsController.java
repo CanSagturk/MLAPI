@@ -12,16 +12,17 @@ import java.util.List;
 public class LeaderboardsController {
     @PostMapping("/")
     public ResponseEntity<List<Score>> postScore(@RequestParam("scoreName") String scoreName,
-                                                 @RequestParam("scoreValue") int scoreValue) {
+                                                 @RequestParam("scoreValue") int scoreValue,
+                                                 @RequestParam("gameId") int gameId) {
         List<Score> tempList = new ArrayList<>();
-        tempList.add(new Score("Player 1", 100));
-        tempList.add(new Score("Player 2", 120));
-        tempList.add(new Score(scoreName, scoreValue));
+        tempList.add(new Score("Player 1", 100, 1));
+        tempList.add(new Score("Player 2", 120, 1));
+        tempList.add(new Score(scoreName, scoreValue, gameId));
         return ResponseEntity.ok(tempList);
     }
 
     @GetMapping("/")
-    public void GetLeaderboards() {
+    public void getLeaderboards() {
         System.out.println("Hello, World!");
     }
 }
