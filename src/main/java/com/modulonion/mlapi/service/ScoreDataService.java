@@ -33,7 +33,16 @@ public class ScoreDataService {
     public List<NameScorePair> getFirstTen(int gameId) {
         return scoreRepository.findFirstTen(gameId)
                 .stream()
-                .map(score -> new NameScorePair(score.getName(), score.getScore()))
+                .map(score -> new NameScorePair(score.getName(), score.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the position of the provided {@link Score} starting from 1
+     * @param score entity the position of which will be searched for
+     * @return index of the position
+     */
+    public int getScorePosition(Score score) {
+        return scoreRepository.findScorePosition(score.getGameId(), score.getValue());
     }
 }

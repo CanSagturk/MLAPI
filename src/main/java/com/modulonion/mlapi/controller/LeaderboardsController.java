@@ -21,13 +21,13 @@ public class LeaderboardsController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<List<NameScorePair>> postScore(@RequestParam("scoreName") String scoreName,
+    public ResponseEntity<Integer> postScore(@RequestParam("scoreName") String scoreName,
                                                           @RequestParam("scoreValue") int scoreValue,
                                                           @RequestParam("gameId") int gameId) {
         Score newScore = new Score(gameId, scoreValue, Uuids.timeBased(), scoreName);
         if (scoreDataService.saveScoreToDatabase(newScore)) {
-            List<NameScorePair> firstTen = scoreDataService.getFirstTen(gameId);
-            return ResponseEntity.ok(firstTen);
+            int scorePosition = scoreDataService.getScorePosition(newScore);
+            return ResponseEntity.ok(scorePosition);
         }
         else {
             return ResponseEntity.internalServerError()

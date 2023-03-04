@@ -12,4 +12,7 @@ import java.util.UUID;
 public interface ScoreRepository extends CassandraRepository<Score, UUID> {
     @Query("SELECT * FROM scores_db.score WHERE gameid = ?0 LIMIT 10")
     List<Score> findFirstTen(Integer gameId);
+
+    @Query("SELECT COUNT(*) FROM scores_db.score WHERE gameid = ?0 AND value >= ?1")
+    Integer findScorePosition(Integer gameId, Integer value);
 }

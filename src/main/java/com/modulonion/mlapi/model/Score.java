@@ -34,7 +34,7 @@ public class Score {
         return name;
     }
 
-    public int getScore() {
+    public int getValue() {
         return value;
     }
 
