@@ -25,9 +25,15 @@ public class LeaderboardsController {
                                                           @RequestParam("scoreValue") int scoreValue,
                                                           @RequestParam("gameId") int gameId) {
         Score newScore = new Score(gameId, scoreValue, Uuids.timeBased(), scoreName);
-        scoreDataService.saveScoreToDatabase(newScore);
-        List<NameScorePair> firstTen = scoreDataService.getFirstTen(gameId);
-        return ResponseEntity.ok(firstTen);
+        if (scoreDataService.saveScoreToDatabase(newScore)) {
+            List<NameScorePair> firstTen = scoreDataService.getFirstTen(gameId);
+            return ResponseEntity.ok(firstTen);
+        }
+        else {
+            return ResponseEntity.internalServerError()
+                    .header("message", "Failed to save the provided score")
+                    .build();
+        }
     }
 
     @GetMapping("/")
