@@ -1,0 +1,1 @@
+CREATE KEYSPACE IF NOT EXISTS scores_db WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : 1};
